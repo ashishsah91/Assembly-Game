@@ -17,14 +17,77 @@ header {
   text-align: center;
 }
 
-header > h1{
-    font-size: 1.25rem;
-    font-weight: 500;
-    color: #F9F4DA;
+header>h1 {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #F9F4DA;
 }
 
-header > p{
-    font-size: 0.875rem;
-    max-width: 350px;
-    color: #8E8E8E;
+header>p {
+  font-size: 0.875rem;
+  max-width: 350px;
+  color: #8E8E8E;
+}
+
+
+section.game-status {
+  background: #10A95B;
+  border-radius: 4px;
+  text-align: center;
+  padding: 6px 0px;
+  color: #F9F4DA;
+  display: flex;
+  flex-direction: column;
+  font-weight: 500;
+  font-family: Hanken Grotesk;
+  align-items: center;
+}
+
+section.game-status>h2 {
+  margin: 5px;
+  font-size: 20px;
+}
+
+section.game-status>p {
+  margin: 2px;
+  font-size: 16px;
+}
+
+section.lang-container {
+  display: flex;
+  flex-wrap: wrap;
+  width: 350px;
+  justify-content: center;
+  margin-block: 30px;
+  gap:5px;
+}
+
+.lang-chip {
+  border-radius: 2px;
+  font-family: Hanken Grotesk;
+  font-weight: 700;
+  font-style: Bold;
+  font-size: 12px;
+  line-height: 100%;
+  letter-spacing: 0%;
+  padding: 5px 2px;
+
+}
+
+
+section.word-container{
+  display: flex;
+  gap:2px;
+  justify-content: center;
+}
+
+.letter-chip{
+  background-color: #323232;
+  color:#F9F4DA;
+  font-size: 18px;
+  font-style: bold;
+  text-transform: uppercase;
+  padding: 10px;
+  border-bottom: 2px solid #F9F4DA;;
+ 
 }
