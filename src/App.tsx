@@ -3,15 +3,27 @@ import { languages } from "./languages"
 
 import React from 'react'
 
+import clsx from 'clsx'
+
 function App(): React.JSX.Element {
 
 
   const [currentWord, setCurrentWord] = React.useState('react')
 
-  const alphabet:string = "abcdefghijklmnopqrstuvwxyz"
+  const [guessedLetters, setGuessedLetters] = React.useState<string[]>([]);
 
+  const alphabet: string = "abcdefghijklmnopqrstuvwxyz"
 
-  const wordEle = currentWord.split("").map((word)=><span className="letter-chip">{word}</span>)
+  const keyboardEle = alphabet.split("")
+    .map((letter: string) =>
+      <button key={letter}
+        className={clsx('keyboard-chip',
+          guessedLetters.includes(letter) && currentWord.includes(letter) && 'correct-key',
+          guessedLetters.includes(letter) && !currentWord.includes(letter) && 'wrong-key')}
+        onClick={() => onClickKey(letter)}>{letter}</button>
+    )
+
+  const wordEle = currentWord.split("").map((word, index) => <span className="letter-chip" key={index}>{word}</span>)
 
   const languageElem = languages.map((lang) => {
     const styles = {
@@ -22,6 +34,17 @@ function App(): React.JSX.Element {
       {lang.name}
     </span>)
   })
+
+  console.log(guessedLetters);
+
+  function onClickKey(letter: string) {
+    setGuessedLetters((prevVal) => {
+      const lettersSet = new Set(prevVal)
+      lettersSet.add(letter)
+      return Array.from(lettersSet)
+    }
+    )
+  }
 
   return (
     <main>
@@ -39,8 +62,14 @@ function App(): React.JSX.Element {
       </section>
 
       <section className="word-container">
-          {wordEle}
+        {wordEle}
       </section>
+
+      <section className="keyboard">
+        {keyboardEle}
+      </section>
+
+      <button className="new-game">New Game</button>
 
     </main>
   )

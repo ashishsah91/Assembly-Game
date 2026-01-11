@@ -59,7 +59,7 @@ section.lang-container {
   width: 350px;
   justify-content: center;
   margin-block: 30px;
-  gap:5px;
+  gap: 5px;
 }
 
 .lang-chip {
@@ -74,20 +74,63 @@ section.lang-container {
 
 }
 
-
-section.word-container{
+section.word-container {
   display: flex;
-  gap:2px;
+  gap: 2px;
   justify-content: center;
+  margin-block: 10px;
 }
 
-.letter-chip{
+.letter-chip {
   background-color: #323232;
-  color:#F9F4DA;
+  color: #F9F4DA;
   font-size: 18px;
   font-style: bold;
   text-transform: uppercase;
   padding: 10px;
-  border-bottom: 2px solid #F9F4DA;;
- 
+  border-bottom: 2px solid #F9F4DA;
+
+}
+
+
+section.keyboard {
+  margin-block: 10px;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 5px
+}
+
+.keyboard-chip {
+  border-radius: 2px;
+  border: 1px solid white;
+  text-transform: uppercase;
+  height: 35px;
+  width: 35px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #FCBA29;
+  font-weight: 600;
+}
+
+.correct-key{
+   background-color: #10A95B;
+}
+
+.wrong-key{
+   background-color: #EC5D49;
+;
+}
+
+button.new-game {
+  background-color: #11B5E5;
+  border: 1px solid #D7D7D7;
+  border-radius: 4px;
+  width: 225px;
+  height: 40px;
+  padding: 6px 12px;
+  display: block;
+  margin-inline: auto;
+  cursor: pointer;
 }
