@@ -31,16 +31,21 @@ header>p {
 
 
 section.game-status {
-  background: #10A95B;
   border-radius: 4px;
-  text-align: center;
-  padding: 6px 0px;
   color: #F9F4DA;
   display: flex;
   flex-direction: column;
   font-weight: 500;
-  font-family: Hanken Grotesk;
   align-items: center;
+  min-height: 60px;
+}
+
+section.game-status.won {
+  background-color: #10A95B;
+}
+
+section.game-status.lost {
+  background-color: #BA2A2A;
 }
 
 section.game-status>h2 {
@@ -63,7 +68,7 @@ section.lang-container {
 }
 
 .lang-chip {
-  border-radius: 2px;
+  border-radius: 3px;
   font-family: Hanken Grotesk;
   font-weight: 700;
   font-style: Bold;
@@ -71,8 +76,24 @@ section.lang-container {
   line-height: 100%;
   letter-spacing: 0%;
   padding: 5px 2px;
+  position: relative;
 
 }
+
+.lang-chip.lost::before {
+  content: "💀";
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  font-size: 0.85rem;
+  top: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.7);
+}
+
 
 section.word-container {
   display: flex;
@@ -87,9 +108,12 @@ section.word-container {
   font-size: 18px;
   font-style: bold;
   text-transform: uppercase;
-  padding: 10px;
+  height: 40px;
+  width: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   border-bottom: 2px solid #F9F4DA;
-
 }
 
 
@@ -114,13 +138,13 @@ section.keyboard {
   font-weight: 600;
 }
 
-.correct-key{
-   background-color: #10A95B;
+.correct-key {
+  background-color: #10A95B;
 }
 
-.wrong-key{
-   background-color: #EC5D49;
-;
+.wrong-key {
+  background-color: #EC5D49;
+  ;
 }
 
 button.new-game {
