@@ -1,11 +1,7 @@
 
-type Language = {
-    name:string,
-    backgroundColor:string,
-    color:string
-}
+import type { Language } from "./types"
 
-export const languages:Language[] = [
+export const languages: Language[] = [
     {
         name: "HTML",
         backgroundColor: "#E2680F",

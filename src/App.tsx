@@ -5,6 +5,8 @@ import React from 'react'
 
 import clsx from 'clsx'
 
+import { getFarewellText } from './utils'
+
 function App(): React.JSX.Element {
 
 
@@ -17,11 +19,21 @@ function App(): React.JSX.Element {
   const wrongGuessCount = guessedLetters.reduce((acc, currentValue) =>
     acc = (!currentWord.includes(currentValue)) ? acc + 1 : acc, 0)
 
+  console.log("wrong guess count " + wrongGuessCount);
+
   const isGameWon = currentWord.split("").every((word) => guessedLetters.includes(word));
   const isGameLost = (wrongGuessCount === languages.length - 1) ? true : false;
   const isGameOver = isGameWon || isGameLost;
+  const lastGuessedLetter = guessedLetters[guessedLetters.length - 1];
+  const isLastGueesedLetterWrong = lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
 
-  console.log("Wrong Guess Count " + wrongGuessCount);
+  console.log("LG " + isLastGueesedLetterWrong);
+
+  const gameStatusClass = clsx('game-status', {
+    won: isGameWon,
+    lost: isGameLost,
+    farewell: !isGameOver && isLastGueesedLetterWrong
+  })
 
   const keyboardEle = alphabet.split("")
     .map((letter: string) =>
@@ -46,8 +58,6 @@ function App(): React.JSX.Element {
     </span>)
   })
 
-  console.log(guessedLetters);
-
   function onClickKey(letter: string) {
     setGuessedLetters((prevVal) => {
       const lettersSet = new Set(prevVal)
@@ -57,10 +67,32 @@ function App(): React.JSX.Element {
     )
   }
 
-  const gameStatusClass = clsx('game-status', {
-    won: isGameWon,
-    lost: isGameLost
-  })
+  function renderGameStatusContent() {
+
+    if (!isGameOver && isLastGueesedLetterWrong) {
+      const returnText = getFarewellText(languages[wrongGuessCount - 1])
+      return <p className="farewell-msg">{returnText}</p>
+    }
+
+    if (isGameWon) {
+      return <>
+        <h2>You Win!</h2>
+        <p>Well Done! 🎉</p>
+      </>
+    } if (isGameLost) {
+      return <>
+        <h2>Game Over!</h2>
+        <p>You lose! Better start learning Assembly 😔</p>
+      </>
+    }
+
+    return null
+
+  }
+
+
+
+
 
   return (
     <main>
@@ -70,17 +102,7 @@ function App(): React.JSX.Element {
       </header>
 
       <section className={gameStatusClass}>
-        {
-          (isGameOver) ?
-            (isGameWon) ?
-              <>
-                <h2>You Win!</h2>
-                <p>Well Done! 🎉</p>
-              </> : <>
-                <h2>Game Over!</h2>
-                <p>You lose! Better start learning Assembly 😔</p>
-              </> : null
-        }
+        {renderGameStatusContent()}
       </section>
 
       <section className="lang-container">
