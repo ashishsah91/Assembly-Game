@@ -37,7 +37,7 @@ function App(): React.JSX.Element {
 
   const keyboardEle = alphabet.split("")
     .map((letter: string) =>
-      <button key={letter}
+      <button key={letter} disabled={isGameOver}
         className={clsx('keyboard-chip',
           guessedLetters.includes(letter) && currentWord.includes(letter) && 'correct-key',
           guessedLetters.includes(letter) && !currentWord.includes(letter) && 'wrong-key')}
@@ -89,10 +89,6 @@ function App(): React.JSX.Element {
     return null
 
   }
-
-
-
-
 
   return (
     <main>
