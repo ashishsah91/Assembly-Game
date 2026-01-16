@@ -38,6 +38,8 @@ function App(): React.JSX.Element {
   const keyboardEle = alphabet.split("")
     .map((letter: string) =>
       <button key={letter} disabled={isGameOver}
+        aria-disabled={guessedLetters.includes(letter)}
+        aria-label={`Letter ${letter}`}
         className={clsx('keyboard-chip',
           guessedLetters.includes(letter) && currentWord.includes(letter) && 'correct-key',
           guessedLetters.includes(letter) && !currentWord.includes(letter) && 'wrong-key')}
@@ -97,7 +99,7 @@ function App(): React.JSX.Element {
         <p>Guess the world in under 8 attempts to keep the programming world safe from Assembly</p>
       </header>
 
-      <section className={gameStatusClass}>
+      <section aria-live="polite" role="status" className={gameStatusClass}>
         {renderGameStatusContent()}
       </section>
 
@@ -107,6 +109,25 @@ function App(): React.JSX.Element {
 
       <section className="word-container">
         {wordEle}
+      </section>
+
+ {/* Combined visually-hidden aria-live region for status updates */}
+      <section
+        className="sr-only"
+        aria-live="polite"
+        role="status"
+      >
+        <p>
+          {currentWord.includes(lastGuessedLetter) ?
+            `Correct! The letter ${lastGuessedLetter} is in the word.` :
+            `Sorry, the letter ${lastGuessedLetter} is not in the word.`
+          }
+          You have {languages.length -1} attempts left.
+        </p>
+        <p>Current word: {currentWord.split("").map(letter =>
+          guessedLetters.includes(letter) ? letter + "." : "blank.")
+          .join(" ")}</p>
+
       </section>
 
       <section className="keyboard">
