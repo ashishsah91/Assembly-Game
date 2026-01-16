@@ -7,11 +7,14 @@ import clsx from 'clsx'
 
 import { getFarewellText } from './utils'
 
+import { getRandomWord } from "./utils"
+
+import Confetti from 'react-confetti'
+
 function App(): React.JSX.Element {
 
-
-  const [currentWord, setCurrentWord] = React.useState('react')
-
+  const [currentWord, setCurrentWord] = React.useState(() => getRandomWord());
+  
   const [guessedLetters, setGuessedLetters] = React.useState<string[]>([]);
 
   const alphabet: string = "abcdefghijklmnopqrstuvwxyz"
@@ -19,15 +22,13 @@ function App(): React.JSX.Element {
   const wrongGuessCount = guessedLetters.reduce((acc, currentValue) =>
     acc = (!currentWord.includes(currentValue)) ? acc + 1 : acc, 0)
 
-  console.log("wrong guess count " + wrongGuessCount);
-
   const isGameWon = currentWord.split("").every((word) => guessedLetters.includes(word));
   const isGameLost = (wrongGuessCount === languages.length - 1) ? true : false;
   const isGameOver = isGameWon || isGameLost;
   const lastGuessedLetter = guessedLetters[guessedLetters.length - 1];
   const isLastGueesedLetterWrong = lastGuessedLetter && !currentWord.includes(lastGuessedLetter);
 
-  console.log("LG " + isLastGueesedLetterWrong);
+
 
   const gameStatusClass = clsx('game-status', {
     won: isGameWon,
@@ -48,7 +49,9 @@ function App(): React.JSX.Element {
 
   const wordEle = currentWord.split("")
     .map((word, index) =>
-      <span className="letter-chip" key={index}>{guessedLetters.includes(word) ? word : ''}</span>)
+      <span className={clsx("letter-chip", isGameLost && "game-lost")} key={index}> {(!isGameLost) ?
+        guessedLetters.includes(word) ? word : '' : word}
+      </span>)
 
   const languageElem = languages.map((lang, index) => {
     const styles = {
@@ -92,8 +95,17 @@ function App(): React.JSX.Element {
 
   }
 
+  function resetGame() {
+    setCurrentWord(() => getRandomWord());
+    setGuessedLetters(() => [])
+  }
+
   return (
     <main>
+      {isGameWon && <Confetti
+        width={window.innerWidth}
+        height={window.innerHeight}
+      />}
       <header>
         <h1>Assembly: Endgame</h1>
         <p>Guess the world in under 8 attempts to keep the programming world safe from Assembly</p>
@@ -111,7 +123,7 @@ function App(): React.JSX.Element {
         {wordEle}
       </section>
 
- {/* Combined visually-hidden aria-live region for status updates */}
+      {/* Combined visually-hidden aria-live region for status updates */}
       <section
         className="sr-only"
         aria-live="polite"
@@ -122,7 +134,7 @@ function App(): React.JSX.Element {
             `Correct! The letter ${lastGuessedLetter} is in the word.` :
             `Sorry, the letter ${lastGuessedLetter} is not in the word.`
           }
-          You have {languages.length -1} attempts left.
+          You have {languages.length - 1} attempts left.
         </p>
         <p>Current word: {currentWord.split("").map(letter =>
           guessedLetters.includes(letter) ? letter + "." : "blank.")
@@ -134,7 +146,7 @@ function App(): React.JSX.Element {
         {keyboardEle}
       </section>
 
-      {isGameOver && <button className="new-game">New Game</button>}
+      {isGameOver && <button className="new-game" onClick={resetGame}>New Game</button>}
 
     </main>
   )

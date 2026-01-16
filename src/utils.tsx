@@ -1,5 +1,15 @@
 
 import type { Language } from "./types";
+import {words} from "./words";
+
+
+
+export function getRandomWord(){
+
+  const randomIndex =  Math.floor(Math.random() * words.length);
+  return words[randomIndex]
+
+}
 
 export function getFarewellText(language: Language) {
 
@@ -8,7 +18,7 @@ export function getFarewellText(language: Language) {
     const options = [
         `Farewell, ${languageName}`,
         `Adios, ${languageName}`,
-        `R.I.P., ${language}`,
+        `R.I.P., ${languageName}`,
         `We'll miss you, ${languageName}`,
         `Oh no, not ${languageName}!`,
         `${languageName} bites the dust`,

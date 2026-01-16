@@ -134,6 +134,10 @@ section.word-container {
   border-bottom: 2px solid #F9F4DA;
 }
 
+.letter-chip.game-lost{
+  color: #EC5D49;
+}
+
 
 section.keyboard {
   margin-block: 10px;
