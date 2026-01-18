@@ -1,17 +1,16 @@
 
 import type { Language } from "./types";
-import {words} from "./words";
+import { words } from "./words";
 
-
-
-export function getRandomWord(){
-
-  const randomIndex =  Math.floor(Math.random() * words.length);
-  return words[randomIndex]
-
+function getRandomIndex(arr: string[]): number {
+    return Math.floor(Math.random() * arr.length);
 }
 
-export function getFarewellText(language: Language) {
+export function getRandomWord():string {
+    return words[getRandomIndex(words)].toLowerCase()
+}
+
+export function getFarewellText(language: Language):string {
 
     const languageName = language.name;
 
@@ -30,6 +29,5 @@ export function getFarewellText(language: Language) {
         `${languageName} has left the building`
     ];
 
-    const randomIndex = Math.floor(Math.random() * options.length);
-    return options[randomIndex];
+    return options[getRandomIndex(options)];
 }
